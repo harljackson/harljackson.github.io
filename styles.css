@@ -221,6 +221,31 @@ img {
   margin-top: 32px;
 }
 
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 700px;
+  margin-top: 20px;
+}
+
+.hero-stats article {
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+}
+
+.hero-stats strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.hero-stats span {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.86rem;
+}
+
 .button {
   display: inline-flex;
   min-height: 48px;
@@ -797,6 +822,10 @@ img {
     max-width: 620px;
   }
 
+  .hero-stats {
+    max-width: 620px;
+  }
+
   .service-grid,
   .project-grid,
   .timeline {
@@ -855,6 +884,10 @@ img {
   .role-tags span {
     width: 100%;
     text-align: center;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
   }
 
   .hero-panel {
