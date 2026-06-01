@@ -84,6 +84,43 @@ if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-
   gsap.set(scrollItems, { autoAlpha: 1, y: 0 });
 }
 
+const magneticTargets = document.querySelectorAll(".magnetic-target");
+const enableMagneticMotion =
+  window.gsap &&
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (enableMagneticMotion) {
+  magneticTargets.forEach((target) => {
+    target.addEventListener("mousemove", (event) => {
+      const bounds = target.getBoundingClientRect();
+      const deltaX = event.clientX - (bounds.left + bounds.width / 2);
+      const deltaY = event.clientY - (bounds.top + bounds.height / 2);
+      const distance = Math.hypot(deltaX, deltaY);
+
+      if (distance <= 50) {
+        gsap.to(target, {
+          duration: 0.3,
+          ease: "power2.out",
+          overwrite: "auto",
+          x: Math.max(-15, Math.min(15, deltaX * 0.3)),
+          y: Math.max(-15, Math.min(15, deltaY * 0.3)),
+        });
+      }
+    });
+
+    target.addEventListener("mouseleave", () => {
+      gsap.to(target, {
+        duration: 0.7,
+        ease: "elastic.out(1, 0.3)",
+        overwrite: "auto",
+        x: 0,
+        y: 0,
+      });
+    });
+  });
+}
+
 const updateHeader = () => {
   if (header) {
     header.classList.toggle("scrolled", window.scrollY > 12);
