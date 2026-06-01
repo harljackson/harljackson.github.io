@@ -729,27 +729,6 @@ img {
   transition: opacity 650ms ease, transform 650ms ease;
 }
 
-.reveal-item {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 620ms ease, transform 620ms ease;
-  transition-delay: var(--reveal-delay, 0ms);
-}
-
-.animations-ready .reveal,
-.animations-ready .reveal-item {
-  opacity: 0;
-  transform: translateY(34px);
-}
-
-.animations-ready .reveal.is-visible,
-.animations-ready .reveal-item.is-visible,
-.reveal.is-visible,
-.reveal-item.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .service-card,
 .project-card,
 .timeline article,
@@ -785,10 +764,6 @@ img {
     transform: none;
   }
 
-  .reveal-item {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 @media (max-width: 940px) {

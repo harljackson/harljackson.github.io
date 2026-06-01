@@ -10,16 +10,18 @@ const staggerGroups = document.querySelectorAll(
   ".service-grid, .stack-cloud, .project-grid, .timeline, .credential-list, .contact-layout"
 );
 
+document.querySelectorAll(".reveal:not(.hero-content)").forEach((section) => {
+  section.classList.add("animate-on-scroll");
+});
+
 staggerGroups.forEach((group) => {
   Array.from(group.children).forEach((item, index) => {
-    item.classList.add("reveal-item");
-    item.style.setProperty("--reveal-delay", `${Math.min(index * 90, 360)}ms`);
+    item.classList.add("animate-on-scroll");
+    item.dataset.scrollDelay = String(Math.min(index * 0.07, 0.28));
   });
 });
 
-const revealItems = document.querySelectorAll(".reveal, .reveal-item");
-
-document.documentElement.classList.add("animations-ready");
+const scrollItems = document.querySelectorAll(".animate-on-scroll");
 
 const heroTitle = document.querySelector(".hero-title");
 const heroSubtitle = document.querySelector(".hero-subtitle");
@@ -55,6 +57,31 @@ if (window.gsap && window.SplitText && heroTitle) {
     })
     .from(heroSubtitle, { autoAlpha: 0, duration: 0.7, y: 20 }, ">0.08")
     .from(heroCta.children, { autoAlpha: 0, duration: 0.65, stagger: 0.08, y: 16 }, "-=0.42");
+}
+
+if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  scrollItems.forEach((item) => {
+    gsap.fromTo(
+      item,
+      { autoAlpha: 0, y: 40 },
+      {
+        autoAlpha: 1,
+        delay: Number(item.dataset.scrollDelay || 0),
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 80%",
+          once: true,
+        },
+        y: 0,
+      }
+    );
+  });
+} else if (window.gsap) {
+  gsap.set(scrollItems, { autoAlpha: 1, y: 0 });
 }
 
 const updateHeader = () => {
@@ -123,28 +150,6 @@ filterButtons.forEach((button) => {
     });
   });
 });
-
-if ("IntersectionObserver" in window) {
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { rootMargin: "0px 0px -12% 0px", threshold: 0.14 }
-  );
-
-  revealItems.forEach((item) => revealObserver.observe(item));
-
-  window.setTimeout(() => {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-  }, 1200);
-} else {
-  revealItems.forEach((item) => item.classList.add("is-visible"));
-}
 
 if (contactForm) {
   contactForm.addEventListener("submit", (event) => {
