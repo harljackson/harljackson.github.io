@@ -21,6 +21,42 @@ const revealItems = document.querySelectorAll(".reveal, .reveal-item");
 
 document.documentElement.classList.add("animations-ready");
 
+const heroTitle = document.querySelector(".hero-title");
+const heroSubtitle = document.querySelector(".hero-subtitle");
+const heroCta = document.querySelector(".hero-cta");
+const heroElements = [heroTitle, heroSubtitle, heroCta].filter(Boolean);
+const showHeroElements = () => {
+  heroElements.forEach((element) => {
+    element.style.visibility = "visible";
+  });
+};
+
+const heroAnimationFallback = window.setTimeout(showHeroElements, 1200);
+
+if (window.gsap && window.SplitText && heroTitle) {
+  gsap.registerPlugin(SplitText);
+
+  const splitTitle = SplitText.create(heroTitle, {
+    type: "words",
+    mask: "words",
+    wordsClass: "hero-title-word",
+  });
+
+  window.clearTimeout(heroAnimationFallback);
+  gsap.set(heroElements, { visibility: "visible" });
+
+  const heroTimeline = gsap.timeline({ defaults: { ease: "power4.out" } });
+  heroTimeline
+    .from(splitTitle.words, {
+      autoAlpha: 0,
+      duration: 1.2,
+      stagger: 0.06,
+      yPercent: 115,
+    })
+    .from(heroSubtitle, { autoAlpha: 0, duration: 0.7, y: 20 }, ">0.08")
+    .from(heroCta.children, { autoAlpha: 0, duration: 0.65, stagger: 0.08, y: 16 }, "-=0.42");
+}
+
 const updateHeader = () => {
   if (header) {
     header.classList.toggle("scrolled", window.scrollY > 12);

@@ -15,6 +15,15 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <noscript>
+      <style>
+        .hero-title,
+        .hero-subtitle,
+        .hero-cta {
+          visibility: visible !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <header class="site-header" data-header>
@@ -47,13 +56,13 @@
           <div class="hero-main">
             <div class="hero-copy-block">
               <p class="eyebrow">Southport, UK | Computer Science Graduate | Seeking IT Support Roles</p>
-              <h1 id="hero-title">IT support candidate with strong troubleshooting and customer service skills.</h1>
-              <p class="hero-copy">
+              <h1 class="hero-title" id="hero-title">IT support candidate with strong troubleshooting and customer service skills.</h1>
+              <p class="hero-copy hero-subtitle">
                 I am a Computer Science graduate with over five years of customer-facing experience across retail,
                 hospitality, and leisure environments. I combine practical technical knowledge with clear communication,
                 calm problem-solving, and a strong focus on resolving issues efficiently.
               </p>
-              <div class="hero-actions">
+              <div class="hero-actions hero-cta">
                 <a class="button primary" href="documents/CV_HJ_2026.pdf" download>Download CV</a>
                 <a class="button ghost" href="#experience">See Experience</a>
                 <a class="button subtle" href="mailto:harleyjackson.dev@gmail.com">Email Me</a>
@@ -348,6 +357,8 @@
       </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

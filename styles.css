@@ -218,6 +218,17 @@ img {
   line-height: 1.62;
 }
 
+.hero-title,
+.hero-subtitle,
+.hero-cta {
+  visibility: hidden;
+}
+
+.hero-title-word-mask {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  overflow: clip;
+}
+
 .hero-actions,
 .contact-links {
   display: flex;
