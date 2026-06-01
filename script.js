@@ -6,8 +6,10 @@ const projectCards = document.querySelectorAll("[data-category]");
 const contactForm = document.querySelector("[data-contact-form]");
 const formStatus = document.querySelector("[data-form-status]");
 const year = document.querySelector("[data-year]");
+const skillsGrid = document.querySelector(".skills-grid");
+const skillBadges = document.querySelectorAll(".skill-badge");
 const staggerGroups = document.querySelectorAll(
-  ".service-grid, .stack-cloud, .project-grid, .timeline, .credential-list, .contact-layout"
+  ".service-grid, .project-grid, .timeline, .credential-list, .contact-layout"
 );
 
 document.querySelectorAll(".reveal:not(.hero-content)").forEach((section) => {
@@ -80,8 +82,32 @@ if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-
       }
     );
   });
+
+  if (skillsGrid && skillBadges.length) {
+    gsap.fromTo(
+      skillBadges,
+      { autoAlpha: 0, scale: 0.9 },
+      {
+        autoAlpha: 1,
+        duration: 0.8,
+        ease: "power3.out",
+        scale: 1,
+        stagger: {
+          amount: 0.5,
+          from: "start",
+          grid: "auto",
+        },
+        scrollTrigger: {
+          trigger: skillsGrid,
+          start: "top 80%",
+          once: true,
+        },
+      }
+    );
+  }
 } else if (window.gsap) {
   gsap.set(scrollItems, { autoAlpha: 1, y: 0 });
+  gsap.set(skillBadges, { autoAlpha: 1, scale: 1 });
 }
 
 const magneticTargets = document.querySelectorAll(".magnetic-target");
@@ -161,6 +187,12 @@ if (nav) {
     }
   });
 }
+
+document.addEventListener("click", (event) => {
+  if (header && nav?.classList.contains("open") && !header.contains(event.target)) {
+    closeNavigation();
+  }
+});
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
