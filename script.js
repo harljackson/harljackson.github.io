@@ -6,7 +6,18 @@ const projectCards = document.querySelectorAll("[data-category]");
 const contactForm = document.querySelector("[data-contact-form]");
 const formStatus = document.querySelector("[data-form-status]");
 const year = document.querySelector("[data-year]");
-const revealItems = document.querySelectorAll(".reveal");
+const staggerGroups = document.querySelectorAll(
+  ".service-grid, .stack-cloud, .project-grid, .timeline, .credential-list, .contact-layout"
+);
+
+staggerGroups.forEach((group) => {
+  Array.from(group.children).forEach((item, index) => {
+    item.classList.add("reveal-item");
+    item.style.setProperty("--reveal-delay", `${Math.min(index * 90, 360)}ms`);
+  });
+});
+
+const revealItems = document.querySelectorAll(".reveal, .reveal-item");
 
 document.documentElement.classList.add("animations-ready");
 
@@ -53,6 +64,13 @@ if (nav) {
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
+    closeNavigation();
+  }
+});
+
+const desktopNav = window.matchMedia("(min-width: 941px)");
+desktopNav.addEventListener("change", (event) => {
+  if (event.matches) {
     closeNavigation();
   }
 });
